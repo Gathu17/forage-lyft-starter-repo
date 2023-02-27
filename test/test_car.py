@@ -6,11 +6,13 @@ from engine.sternman_engine import Sternman
 from engine.willoughby_engine import Willoughby
 from battery.nubbin_battery import Nubbin
 from battery.spindler_battery import Spindler
+from tires.octoprime_tire import Octoprime
+from tires.carrigan_tire import Carrigan 
 
 class TestNubbin(unittest.TestCase):
     def test_battery_should_be_serviced(self):
         today = datetime.today().date()
-        last_service_date = today.replace(year=today.year - 4)
+        last_service_date = today.replace(year=today.year - 5)
         current_date = datetime.today().date()
 
         battery = Nubbin(last_service_date, current_date)
@@ -27,7 +29,7 @@ class TestNubbin(unittest.TestCase):
 class TestSpindler(unittest.TestCase):
     def test_battery_should_be_serviced(self):
         today = datetime.today().date()
-        last_service_date = today.replace(year=today.year - 3)
+        last_service_date = today.replace(year=today.year - 4)
         current_date = datetime.today().date()
 
         battery = Spindler(last_service_date, current_date)
@@ -90,6 +92,31 @@ class TestSternamnEngine(unittest.TestCase):
         engine = Sternman(last_service_date, warning_light_is_on)
         self.assertFalse(engine.needs_service())
 
+class TestOctoprimeTire(unittest.TestCase):
+    def test_tire_should_be_serviced(self):
+        tires_array = [1,1,1,1]
+
+        tires = Octoprime(tires_array)
+        self.assertTrue(tires.needs_service())
+
+    def test_tire_should_not_be_serviced(self):
+        tires_array = [0,0,1,1]
+
+        tires = Octoprime(tires_array)
+        self.assertFalse(tires.needs_service())
+
+class TestCarriganTire(unittest.TestCase):
+    def test_tire_should_be_serviced(self):
+        tires_array = [0.5,0.5,1,0.6]
+
+        tires = Carrigan(tires_array)
+        self.assertTrue(tires.needs_service())
+
+    def test_tire_should_not_be_serviced(self):
+        tires_array = [0,0,0.6,0.5]
+
+        tires = Carrigan(tires_array)
+        self.assertFalse(tires.needs_service())
 
 if __name__ == '__main__':
     unittest.main()

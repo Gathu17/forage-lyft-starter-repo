@@ -6,7 +6,7 @@ from battery.nubbin_battery import NubbinBattery
 from battery.spindler_battery import SpindlerBattery
 
 class Factory:
-    def create_calliope(current_date, last_service_date, current_mileage, last_service_mileage):
+    def create_calliope(current_date, last_service_date, current_mileage, last_service_mileage, tires_array):
         engine = CapuletEngine(current_mileage, last_service_mileage)
         battery = SpindlerBattery(current_date, last_service_date)
         car = Car(engine, battery)
